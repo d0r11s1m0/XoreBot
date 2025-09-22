@@ -31,7 +31,7 @@ namespace DiscordBot
             _channelSupportTicketCreate = jsonReader.channelSupportTicketCreate;
             _ticketsCategoryID = jsonReader.ticketsCategoryID;
             
-            DiscordClientBuilder builder = DiscordClientBuilder.CreateDefault("MTQxNzIxMjUxMDkzMDQ2ODg5NA.GRtd4_.jmS8IIf76npjxMxnWkdPG4bzMEsM2MBS-uklBM", DiscordIntents.All);
+            DiscordClientBuilder builder = DiscordClientBuilder.CreateDefault(_token, DiscordIntents.All);
             
             builder.UseSlashCommands(options =>
             {

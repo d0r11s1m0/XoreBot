@@ -1,0 +1,11 @@
+﻿{
+  "token": "token",
+  "prefix": "/",
+  "channelTeamRoster": "channelTeamRoster",
+  "projectLeadRoleID": "projectLeadRoleID",
+  "timeToUpdateStaffListInMinutes": "timeToUpdateStaffListInMinutes",
+  "leadStaffRoleID": "leadStaffRoleID",
+  "timeToCreateNewCourtChannelInMinutes": "timeToCreateNewCourtChannelInMinutes",
+  "channelSupportTicketCreate": "channelSupportTicketCreate",
+  "ticketsCategoryID": "ticketsCategoryID"
+}

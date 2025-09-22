@@ -27,7 +27,7 @@ public class JSONReader
                         leadStaffRoleID = jsonStructure.LeadStaffRoleID;
                         timeToCreateNewCourtChannelInMinutes = jsonStructure.TimeToCreateNewCourtChannelInMinutes;
                         channelSupportTicketCreate = jsonStructure.ChannelSupportTicketCreate;
-                        ticketsCategoryID = jsonStructure.ChannelSupportTicketCreate;
+                        ticketsCategoryID = jsonStructure.TicketsCategoryID;
                 }
         }
 }

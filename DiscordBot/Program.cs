@@ -37,7 +37,6 @@ namespace DiscordBot
             {
                 options.RegisterCommands<commands.StaffListCommands>();
                 options.RegisterCommands<commands.HelpCommands>();
-                //options.RegisterCommands<commands.CourtCommands>();
             });
             
             builder.ConfigureEventHandlers(b =>
@@ -126,7 +125,7 @@ namespace DiscordBot
             public async Task HandleEventAsync(DiscordClient client, ComponentInteractionCreatedEventArgs eventArgs)
             {
                 var guild = eventArgs.Guild;
-                var category = await guild.GetChannelAsync(1419731855649017876);
+                var category = await guild.GetChannelAsync(_ticketsCategoryID);
                 
                 if (eventArgs.Id != "support_ticket_menu")
                     return;

@@ -1,5 +1,5 @@
 ﻿using DSharpPlus.SlashCommands;
-using DiscordBot.config;
+using DiscordBot.Config;
 using Microsoft.Extensions.Logging;
 using DSharpPlus.Entities;
 
@@ -7,13 +7,12 @@ namespace DiscordBot.commands;
 
 public class HelpCommands : ApplicationCommandModule
 {
-    private static ulong _leadStaffRoleID;
+    private static AppConfig _config = null!;
     
-    static HelpCommands()
+    static async Task HelpCommandsFields()
     {
-        var jsonReader = new JSONReader();
-        jsonReader.ReadJson();
-        _leadStaffRoleID = jsonReader.leadStaffRoleID;
+        var jsonReader = new JsonReader();
+        _config = await jsonReader.ReadJsonAsync();
     }
     
     [SlashCommand("help", "Получить помощь по боту")]
@@ -34,7 +33,7 @@ public class HelpCommands : ApplicationCommandModule
         
         message.AddField("Доступные команды:", "**/help** - вывести это окно", true);
         
-        if (ctx.Member.Roles.Any(r => r.Id == _leadStaffRoleID))
+        if (ctx.Member.Roles.Any(r => r.Id == _config.LeadStaffRoleId))
             message.AddField("Дополнительные команды для ваших ролей:", "**/stafflist_update** - обновляет список команды проекта", true);
         
         var response = new DiscordInteractionResponseBuilder()

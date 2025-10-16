@@ -1,30 +1,28 @@
-﻿using DiscordBot.config;
+﻿using DiscordBot.Config;
+using DiscordBot.services;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 using DSharpPlus.SlashCommands;
-using DSharpPlus;
-using DSharpPlus.CommandsNext.Attributes;
 
 namespace DiscordBot.commands;
 
 public class StaffListCommands : ApplicationCommandModule
 {
-    private static ulong _channelTeamRoster;
-    private static ulong _leadStaffRoleID;
+    private static AppConfig _config = null!;
     
-    static StaffListCommands()
+    static async Task StaffListCommandsFields()
     {
-        var jsonReader = new JSONReader();
-        jsonReader.ReadJson();
-        _channelTeamRoster = jsonReader.channelTeamRoster;
-        _leadStaffRoleID = jsonReader.leadStaffRoleID;
+        var jsonReader = new JsonReader();
+        _config = await jsonReader.ReadJsonAsync();
+        
     }
     
     [SlashCommand("stafflist_update", "Досрочно обновляет список команды проекта")]
     public async Task StaffListUpdate(InteractionContext ctx)
     {
-        
-        if (!ctx.Member.Roles.Any(r => r.Id == _leadStaffRoleID))
+        var Client = Program.Client;
+
+        if (!ctx.Member.Roles.Any(r => r.Id == _config.LeadStaffRoleId))
         {
             ctx.Client.Logger.LogError($"❌ Отказано к доступу к команде, причина: отсутствует нужная роль. Запрашивающий: {ctx.User.Username}");
             var responseEmbedNo = new DiscordEmbedBuilder()
@@ -47,9 +45,10 @@ public class StaffListCommands : ApplicationCommandModule
             return;
         }
         
-        var channel = await ctx.Client.GetChannelAsync(_channelTeamRoster);
+        var channel = await ctx.Client.GetChannelAsync(_config.ChannelTeamRoster);
+        var staffListService = new StaffListService();
 
-        await Program.ProjectLeadStaffUpdate();
+        await staffListService.ProjectLeadStaffUpdate(_config.ChannelTeamRoster, Client);
         var responseEmbed = new DiscordEmbedBuilder()
         {
             Title = ".bot/StaffListUpdate | .bot/ОбновлениеСпискаКомандыПроекта",
